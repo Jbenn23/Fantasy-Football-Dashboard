@@ -1,5 +1,5 @@
 {
- "run_ts": "2026-10-01T18:24:24+00:00",
+ "run_ts": "2026-10-01T22:30:05+00:00",
  "league_id": 1584850566,
  "season": 2026,
  "errors": {},
@@ -178,7 +178,7 @@
  },
  "nflverse_last_week": 3,
  "tables": {
-  "trending": 169,
+  "trending": 168,
   "teams": 12,
   "rosters": 200,
   "activity": 85,
