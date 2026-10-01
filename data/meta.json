@@ -1,0 +1,115 @@
+{
+ "run_ts": "2026-10-01T15:14:19+00:00",
+ "league_id": 1584850566,
+ "season": 2026,
+ "errors": {},
+ "sample": true,
+ "week": 4,
+ "league_name": "Sample League (synthetic)",
+ "slots": {
+  "QB": 1,
+  "RB": 2,
+  "WR": 2,
+  "TE": 1,
+  "RB/WR/TE": 1
+ },
+ "faab": true,
+ "faab_budget": 100,
+ "my_team_id": 1,
+ "scoring": {
+  "source": "sample (ESPN default half PPR)",
+  "label": "Half PPR",
+  "rec_pts": 0.5,
+  "pass_td_pts": 4,
+  "pass_yds_per_pt": 25.0,
+  "rush_yds_per_pt": 10.0,
+  "rec_yds_per_pt": 10.0,
+  "bonuses": [],
+  "unmodeled": [],
+  "rules": {
+   "3": 0.04,
+   "4": 4,
+   "19": 2,
+   "20": -2,
+   "24": 0.1,
+   "25": 6,
+   "26": 2,
+   "42": 0.1,
+   "43": 6,
+   "44": 2,
+   "53": 0.5,
+   "72": -2
+  }
+ },
+ "advanced": {
+  "last_week": 3,
+  "next_week": 4,
+  "scoring": {
+   "source": "rules",
+   "label": "Half PPR",
+   "rec_pts": 0.5,
+   "pass_td_pts": 4,
+   "pass_yds_per_pt": 25.0,
+   "rush_yds_per_pt": 10.0,
+   "rec_yds_per_pt": 10.0,
+   "bonuses": [],
+   "unmodeled": [],
+   "rules": {
+    "3": 0.04,
+    "4": 4,
+    "19": 2,
+    "20": -2,
+    "24": 0.1,
+    "25": 6,
+    "26": 2,
+    "42": 0.1,
+    "43": 6,
+    "44": 2,
+    "53": 0.5,
+    "72": -2
+   }
+  },
+  "route_rate": {
+   "WR": 0.97,
+   "TE": 0.78,
+   "RB": 0.6,
+   "FB": 0.3,
+   "QB": 0.0
+  },
+  "reg_k": {
+   "QB": 8,
+   "RB": 12,
+   "WR": 10,
+   "TE": 12
+  },
+  "prior_stability": 0.4,
+  "recent_weeks": 2,
+  "sources": {
+   "pbp": 8311,
+   "stats": 3339,
+   "snaps": 4488,
+   "ffopp": 1028,
+   "ffopp_prev": 6054,
+   "ngs_rec": 323,
+   "ngs_rush": 141,
+   "ngs_pass": 135,
+   "pfr_rec": 773,
+   "pfr_rush": 379,
+   "ftn": 8065,
+   "sched": 272,
+   "ids": 12508
+  }
+ },
+ "nflverse_last_week": 3,
+ "tables": {
+  "trending": 59,
+  "teams": 10,
+  "rosters": 140,
+  "activity": 0,
+  "adv_players": 438,
+  "adv_weekly": 1037,
+  "team_ctx": 32,
+  "waiver_board": 220,
+  "my_team": 14
+ }
+}
