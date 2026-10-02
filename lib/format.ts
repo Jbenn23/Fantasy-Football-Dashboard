@@ -31,8 +31,8 @@ export function fmt(v: unknown, f: Fmt = "num1"): string {
 export const SIGNAL_META: Record<string, { label: string; tone: "good" | "bad"; icon: string; help: string }> = {
   BUY_LOW: { label: "Buy low", tone: "good", icon: "▲", help: "Usage-based projection well above actual scoring — positive regression expected" },
   SELL_HIGH: { label: "Sell high", tone: "bad", icon: "▼", help: "Scoring well above what usage supports — negative regression expected" },
-  RISING: { label: "Role rising", tone: "good", icon: "↗", help: "Recent xFP / route / target / rush share up sharply" },
-  FALLING: { label: "Role falling", tone: "bad", icon: "↘", help: "Recent xFP / route / target / rush share down sharply" },
+  RISING: { label: "Role rising", tone: "good", icon: "↗", help: "Snap share +15pp and xFP/g +2 over the last 2 weeks" },
+  FALLING: { label: "Role falling", tone: "bad", icon: "↘", help: "Snap share −15pp and xFP/g −2 over the last 2 weeks" },
   OUT_FOR_SEASON: { label: "Out for season", tone: "bad", icon: "✕", help: "Season-ending injury: zero rest-of-season value" },
   INJURED: { label: "Injured", tone: "bad", icon: "✚", help: "Out / IR / doubtful: value scaled by expected games available" },
   ROLE_OPENED: { label: "Role opened", tone: "good", icon: "⤴", help: "Inherits usage vacated by an injured teammate" },

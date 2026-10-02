@@ -46,7 +46,7 @@ export default function Method() {
       <ul>
         <li><b>Buy low</b>: value gap ≥ +2.0 pts/g and the player is fantasy-relevant (usage or scoring above a position floor: QB 14, RB/WR 8, TE 6).</li>
         <li><b>Sell high</b>: value gap ≤ −2.5 pts/g, same relevance floor.</li>
-        <li><b>Role rising / falling</b>: in the last {a?.recent_weeks ?? 2} weeks vs earlier, any of xFP/g ±3, route share ±15 pts, target share ±7 pts, RB rush share ±15 pts, with no move in the other direction.</li>
+        <li><b>Role rising / falling</b>: snap share up (down) ≥15 points over the last 2 weeks vs earlier, confirmed by expected points per game up (down) ≥2. Backtest 2024–25: rising players beat their season scoring by +1.2 pts/g over the next 4 weeks (vs +0.6 for the old rule) and kept the role 66% of the time; falling players dropped −1.6 pts/g and stayed down 70%. Weakest case: WRs rising (≈0 edge) — treat those as watch-list, not buys.</li>
         <li>Touchdowns ±1.5 vs expected and QB pass TDs ±2 vs expected are listed as reasons.</li>
       </ul>
 
