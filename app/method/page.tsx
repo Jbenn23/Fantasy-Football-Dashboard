@@ -22,7 +22,7 @@ export default function Method() {
       <h2>Projection</h2>
       <ul>
         <li><b>xFP</b> (expected fantasy points): from ffverse <code>ffopportunity</code>, which projects an expected stat line (receptions, yards, TDs, INTs, 2-pt) for every target, carry and dropback from down, distance, field position, air yards and game situation. That expected stat line is scored with your league&apos;s exact rules — see Scoring below.</li>
-        <li><b>Usage</b> = 60% × xFP/g over the last {a?.recent_weeks ?? 2} weeks + 40% × season xFP/g (roles change, so recent usage counts more).</li>
+        <li><b>Usage</b> = 30% × xFP/g over the last {a?.recent_weeks ?? 2} weeks + 70% × season xFP/g (backtests showed heavier recency weights over-react to one or two games).</li>
         <li><b>FPOE</b> = actual − expected points per game (efficiency + TD luck).</li>
         <li><b>Regressed efficiency</b> = (games × FPOE + K × prior) ÷ (games + K). The prior is {a?.prior_stability ?? 0.4} × last season&apos;s FPOE/g (when the player had at least 6 games), otherwise 0. K by position: {a ? Object.entries(a.reg_k).map(([k, v]) => `${k} ${v}`).join(", ") : "QB 8, RB 12, WR 10, TE 12"} games. Bigger K means the current sample is trusted less.</li>
         <li><b>Projection / game</b> = usage + regressed efficiency. <b>Value gap</b> = projection − actual FP/g.</li>

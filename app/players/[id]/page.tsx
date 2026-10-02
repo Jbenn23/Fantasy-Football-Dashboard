@@ -112,7 +112,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
         <div className="card">
           <div className="card-head"><h2>How the projection is built</h2></div>
           <div className="kv">
-            <Kv label="Usage (xFP/g, 60% last 2 wks + 40% season)" value={fmt(p.usage_xfp_g)} />
+            <Kv label="Usage (xFP/g, 30% last 2 wks + 70% season)" value={fmt(p.usage_xfp_g)} />
             <Kv label={`Efficiency this season (FPOE/g, ${p.games} G)`} value={fmt(p.fpoe_g, "signed1")} />
             <Kv label={`Last season FPOE/g (${fmt(p.prev_games, "int")} G)`} value={fmt(p.prev_fpoe_g, "signed1")} />
             <Kv label={`Regressed efficiency (K = ${k} games)`} value={fmt(p.eff_reg_g, "signed1")} />
