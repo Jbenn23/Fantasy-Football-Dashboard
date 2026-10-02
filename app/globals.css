@@ -215,3 +215,4 @@ table.dt { border-collapse: separate; border-spacing: 0; width: 100%; font-size:
   .slotrow > span:last-child { grid-column: 2; }
   .tile .value { font-size: 22px; }
 }
+.brand span { display: inline-block; max-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }

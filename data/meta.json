@@ -1,5 +1,5 @@
 {
- "run_ts": "2026-10-02T21:18:36+00:00",
+ "run_ts": "2026-10-02T21:38:53+00:00",
  "league_id": 1584850566,
  "season": 2026,
  "errors": {},
@@ -188,6 +188,7 @@
   "teams": 12,
   "rosters": 200,
   "activity": 87,
+  "def_profiles": 32,
   "adv_players": 438,
   "adv_weekly": 1058,
   "team_ctx": 32,

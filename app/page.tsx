@@ -35,7 +35,12 @@ export default function WarRoom() {
     .filter((r: Row) => r.team_id === myId)
     .map((r: Row) => ({ ...r, ...(byEspn.get(String(r.espn_id)) ?? {}), injury_status: byEspn.get(String(r.espn_id))?.injury_status ?? r.injury_status, espn_id: String(r.espn_id), team: r.pro_team }));
   const slots = meta.slots ?? { QB: 1, RB: 2, WR: 2, TE: 1, "RB/WR/TE": 1 };
-  const weekVal = (r: Row) => (isHurt(r.injury_status) || r.on_bye ? 0 : Number(r.proj_week) || Number(r.ros_proj_g) || 0);
+  const weekVal = (r: Row) => {
+    if (isHurt(r.injury_status) || r.on_bye || r.bye) return 0;
+    const e = Number(r.proj_week), m = Number(r.wk_proj);
+    if (Number.isFinite(e) && Number.isFinite(m) && r.wk_proj != null) return (e + m) / 2; // ESPN + usage×matchup
+    return Number.isFinite(e) ? e : Number(r.ros_proj_g) || 0;
+  };
   const lineup = bestLineup(mine, slots, weekVal);
   const fas = players.filter((p) => p.status === "FA" && !isHurt(p.injury_status) && p.games >= 1);
   const bestFA = (slot: string) =>
@@ -73,14 +78,14 @@ export default function WarRoom() {
         <Tile label="Points for" value={me ? fmt(me.points_for, "num1") : "–"} note={me ? `${fmt(me.points_against, "num1")} against` : ""} />
         <Tile label="Playoff odds (ESPN)" value={me ? `${fmt(me.playoff_pct, "int")}%` : "–"} />
         <Tile label="Key players out" value={String(hurtStarters)} note="Out / IR / Doubtful, ≥10 proj pts/g" />
-        <Tile label="Best healthy lineup" value={fmt(lineupProj)} note={`ESPN wk ${meta.week ?? ""} projection`} />
+        <Tile label="Best healthy lineup" value={fmt(lineupProj)} note={`Week ${meta.week ?? ""}: ESPN + model (usage × matchup) blend`} />
       </div>
 
       <div className="grid g2 section">
         <div className="card">
           <div className="card-head">
             <h2>This week&apos;s best healthy lineup</h2>
-            <span className="small muted">ESPN wk proj · model proj/g · best FA at slot</span>
+            <span className="small muted">week proj (ESPN + model blend) · matchup grade · ROS/g</span>
           </div>
           {lineup.map((l, i) => {
             const fa = bestFA(l.slot);
@@ -94,7 +99,7 @@ export default function WarRoom() {
                     <>
                       {l.player.gsis_id ? <Link className="plink" href={`/players/${l.player.gsis_id}`}><b>{l.player.name}</b></Link> : <b>{l.player.name}</b>}{" "}
                       <span className="muted small">{l.player.team}</span> <Injury status={l.player.injury_status} />{" "}
-                      <span className="small sub num">{fmt(l.player.proj_week)} · {fmt(l.player.ros_proj_g)}</span>
+                      <span className="small sub num">{fmt(weekVal(l.player))} wk{l.player.wk_opp ? ` vs ${l.player.wk_opp}` : ""}{l.player.matchup_grade ? ` (${l.player.matchup_grade})` : ""} · {fmt(l.player.ros_proj_g)} ROS</span>
                     </>
                   ) : <span className="weak">Empty — no healthy eligible player</span>}
                   {upgrade && (

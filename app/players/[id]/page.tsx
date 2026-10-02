@@ -123,6 +123,15 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
             <Kv label="ESPN projected avg / game" value={fmt(p.proj_avg)} />
             <Kv label="Model edge vs ESPN" value={fmt(p.market_gap, "signed1")} />
           </div>
+          <div className="card-head section"><h2>This week&apos;s matchup</h2></div>
+          <div className="kv">
+            <Kv label={`Grade vs ${p.wk_opp ?? "–"}`} value={p.bye ? "BYE" : `${p.matchup_grade ?? "–"} (×${fmt(p.matchup_mult, "num2")})`} />
+            <Kv label="Vegas environment" value={fmt(p.m_env, "signedpct")} />
+            <Kv label="Game script (RB)" value={fmt(p.m_spread, "signedpct")} />
+            <Kv label="Opponent pts allowed to position (adj.)" value={fmt(p.m_dvp, "signedpct")} />
+            <Kv label="Week projection (model)" value={fmt(p.wk_proj)} />
+            <Kv label="Schedule: next 4 / weeks 15–17" value={`${fmt(p.sos_next4, "num2")} / ${fmt(p.sos_playoffs, "num2")}`} />
+          </div>
           <div className="card-head section"><h2>Next game</h2></div>
           <div className="kv">
             <Kv label="Opponent" value={p.next_opp ? `${p.home ? "vs" : "@"} ${p.next_opp}` : "–"} />

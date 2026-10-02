@@ -50,6 +50,14 @@ export default function Method() {
         <li>Touchdowns ±1.5 vs expected and QB pass TDs ±2 vs expected are listed as reasons.</li>
       </ul>
 
+      <h2>Matchups</h2>
+      <ul>
+        <li><b>Multiplier</b> = Vegas environment × opponent-adjusted points allowed, capped 0.75–1.30. Vegas: (team implied total ÷ league average − 1) × QB 0.8 / RB 0.6 / WR 0.4 / TE 0.4, plus RB game script 0.4% per point of spread.</li>
+        <li><b>Opponent-adjusted points allowed</b>: what each offense&apos;s position group scored against a defense minus what that offense scores in its other games, averaged and shrunk by games/(games+6); weight 0.25 for QB/RB/TE, 0 for WR.</li>
+        <li><b>Evidence</b>: backtested weeks 5–18 of 2024 and 2025. Within-week rank correlation (start/sit ordering) improved overall 0.378→0.400 (2024) and 0.342→0.360 (2025); QB +0.05, TE +0.025, RB ±0.01, WR +0.003. Absolute error got ~0.2–0.5% worse. Coefficients fit freely on one season flipped sign on the other, so the &ldquo;matchup type&rdquo; terms (deep-ball vulnerability, RB/TE target funnels, pass/rush EPA allowed, sack rate) are shown as context with zero weight.</li>
+        <li><b>Week projection</b> = projection when playing × matchup × chance he plays. Lineups use the average of that and ESPN&apos;s weekly projection. <b>ROS/g</b> also folds in the remaining schedule (defense only; Vegas lines don&apos;t exist yet) and byes.</li>
+      </ul>
+
       <h2>Injuries override the model</h2>
       <ul>
         <li><b>Status sources</b>, strongest first: your <code>injury_overrides.csv</code> (on the Mac mini, in ff-pipeline) → ESPN player news (scanned for &ldquo;out for the season&rdquo;, torn ACL/Achilles, &ldquo;miss X weeks&rdquo;) → ESPN league status → Sleeper → NFL injury report.</li>
