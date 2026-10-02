@@ -1,5 +1,5 @@
 {
- "run_ts": "2026-10-01T23:05:05+00:00",
+ "run_ts": "2026-10-02T12:05:47+00:00",
  "league_id": 1584850566,
  "season": 2026,
  "errors": {},
@@ -81,8 +81,8 @@
   }
  },
  "advanced": {
-  "last_week": 3,
-  "next_week": 4,
+  "last_week": 4,
+  "next_week": 5,
   "scoring": {
    "source": "rules",
    "label": "Half PPR",
@@ -161,29 +161,29 @@
   "prior_stability": 0.4,
   "recent_weeks": 2,
   "sources": {
-   "pbp": 8311,
-   "stats": 3339,
-   "snaps": 4488,
-   "ffopp": 1028,
+   "pbp": 8497,
+   "stats": 3407,
+   "snaps": 4579,
+   "ffopp": 1048,
    "ffopp_prev": 6054,
-   "ngs_rec": 323,
-   "ngs_rush": 141,
-   "ngs_pass": 135,
+   "ngs_rec": 333,
+   "ngs_rush": 143,
+   "ngs_pass": 137,
    "pfr_rec": 773,
    "pfr_rush": 379,
    "ftn": 8065,
    "sched": 272,
-   "ids": 12508
+   "ids": 12518
   }
  },
- "nflverse_last_week": 3,
+ "nflverse_last_week": 4,
  "tables": {
   "trending": 167,
   "teams": 12,
   "rosters": 200,
-  "activity": 85,
+  "activity": 87,
   "adv_players": 438,
-  "adv_weekly": 1037,
+  "adv_weekly": 1058,
   "team_ctx": 32,
   "waiver_board": 200,
   "my_team": 17
