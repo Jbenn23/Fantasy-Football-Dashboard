@@ -6,7 +6,9 @@ const COLS: Col[] = [
   { key: "status", label: "Availability", kind: "avail" },
   { key: "games", label: "G", fmt: "int" },
   // model
-  { key: "proj_fp_g", label: "Proj/g", pct: "pct_proj_fp_g" },
+  { key: "ros_proj_g", label: "ROS/g", help: "Rest-of-season points per game: model projection × expected availability (injuries), incl. usage inherited from injured teammates" },
+  { key: "proj_fp_g", label: "Healthy/g", help: "Projection per game when playing" },
+  { key: "avail_ros", label: "Avail", fmt: "pct", help: "Expected share of remaining fantasy weeks available" },
   { key: "fp_g", label: "FP/g" },
   { key: "xfp_g", label: "xFP/g", pct: "pct_xfp_g" },
   { key: "fpoe_g", label: "FPOE/g", fmt: "signed1", help: "Fantasy points over expected per game" },
@@ -60,11 +62,11 @@ const COLS: Col[] = [
 ];
 
 const PRESETS = [
-  { name: "Model", keys: ["status", "games", "proj_fp_g", "fp_g", "xfp_g", "fpoe_g", "value_gap", "td_diff", "signals", "reasons"] },
+  { name: "Model", keys: ["status", "games", "ros_proj_g", "proj_fp_g", "avail_ros", "fp_g", "xfp_g", "fpoe_g", "value_gap", "td_diff", "signals", "reasons"] },
   { name: "Receiving", keys: ["games", "snap_pct", "route_share", "tprr", "yprr", "target_share", "first_read_share", "air_yards_share", "adot", "wopr", "epa_per_target", "catchable_rate", "rz_targets", "ez_targets", "separation", "yacoe"] },
   { name: "Rushing", keys: ["games", "snap_pct", "rush_share", "rz_carry_share", "i10_carry_share", "hv_touches_g", "epa_per_rush", "rush_success_rate", "ryoe_att", "ybc_att", "yac_att", "box8_rate", "route_share", "tprr"] },
   { name: "Passing", keys: ["games", "dropbacks_g", "epa_db", "cpoe", "db_success_rate", "qb_adot", "sack_rate", "iw_rate", "designed_rush_g", "rush_yds_g", "time_to_throw", "pass_td_diff"] },
-  { name: "Matchup", keys: ["status", "proj_fp_g", "next_opp", "implied_total", "neutral_proe", "signals"] },
+  { name: "Matchup", keys: ["status", "ros_proj_g", "next_opp", "implied_total", "neutral_proe", "signals"] },
 ];
 
 export default function Players() {
@@ -78,7 +80,7 @@ export default function Players() {
       </div>
       <div className="card">
         <DataTable rows={rows} columns={COLS} presets={PRESETS} search availability minGames
-          positions={["QB", "RB", "WR", "TE"]} initialSort={{ key: "proj_fp_g", dir: "desc" }} limit={100} />
+          positions={["QB", "RB", "WR", "TE"]} initialSort={{ key: "ros_proj_g", dir: "desc" }} limit={100} />
       </div>
     </>
   );

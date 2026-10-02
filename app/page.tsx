@@ -2,17 +2,18 @@ import Link from "next/link";
 import DataTable, { type Col } from "@/components/DataTable";
 import { Injury, Signals } from "@/components/Badges";
 import { getLeagueTeams, getMeta, getPlayers, getRosters, pick, playerByEspn } from "@/lib/data";
+import { fallCols, falloutRows } from "@/lib/fallout";
 import { fmt, isHurt } from "@/lib/format";
 import { bestLineup, SLOT_ELIG } from "@/lib/lineup";
 import type { Row } from "@/lib/types";
 
 const BASE = ["gsis_id", "espn_id", "name", "position", "team", "status", "fantasy_team", "injury_status", "games",
-  "fp_g", "xfp_g", "proj_fp_g", "value_gap", "signals", "reasons", "adds_24h", "proj_avg", "market_gap", "xfp_trend"];
+  "fp_g", "xfp_g", "proj_fp_g", "ros_proj_g", "avail_ros", "value_gap", "signals", "reasons", "adds_24h", "proj_avg", "market_gap", "xfp_trend"];
 
 const tradeCols: Col[] = [
   { key: "name", label: "Player", kind: "player" },
   { key: "fantasy_team", label: "Owner", fmt: "text" },
-  { key: "proj_fp_g", label: "Proj/g", help: "Model projection per game: usage (xFP) + regressed efficiency" },
+  { key: "ros_proj_g", label: "ROS/g", help: "Rest-of-season points per game: model projection × expected availability (injuries), incl. usage inherited from injured teammates" },
   { key: "fp_g", label: "FP/g" },
   { key: "xfp_g", label: "xFP/g" },
   { key: "value_gap", label: "Gap", kind: "delta", help: "Projection minus actual FP/g. + = should score more going forward" },
@@ -32,18 +33,21 @@ export default function WarRoom() {
   // My roster: ESPN is source of truth; enrich with model output
   const mine: Row[] = rosters
     .filter((r: Row) => r.team_id === myId)
-    .map((r: Row) => ({ ...r, ...(byEspn.get(String(r.espn_id)) ?? {}), injury_status: r.injury_status, espn_id: String(r.espn_id), team: r.pro_team }));
+    .map((r: Row) => ({ ...r, ...(byEspn.get(String(r.espn_id)) ?? {}), injury_status: byEspn.get(String(r.espn_id))?.injury_status ?? r.injury_status, espn_id: String(r.espn_id), team: r.pro_team }));
   const slots = meta.slots ?? { QB: 1, RB: 2, WR: 2, TE: 1, "RB/WR/TE": 1 };
-  const weekVal = (r: Row) => (isHurt(r.injury_status) || r.on_bye ? 0 : Number(r.proj_week) || Number(r.proj_fp_g) || 0);
+  const weekVal = (r: Row) => (isHurt(r.injury_status) || r.on_bye ? 0 : Number(r.proj_week) || Number(r.ros_proj_g) || 0);
   const lineup = bestLineup(mine, slots, weekVal);
   const fas = players.filter((p) => p.status === "FA" && !isHurt(p.injury_status) && p.games >= 1);
   const bestFA = (slot: string) =>
-    fas.filter((p) => SLOT_ELIG[slot]?.includes(p.position)).sort((a, b) => b.proj_fp_g - a.proj_fp_g)[0];
-  const hurtStarters = mine.filter((r) => isHurt(r.injury_status) && (Number(r.proj_fp_g) || Number(r.proj_avg) || 0) >= 10).length;
+    fas.filter((p) => SLOT_ELIG[slot]?.includes(p.position)).sort((a, b) => b.ros_proj_g - a.ros_proj_g)[0];
+  const hurtStarters = mine.filter((r) => isHurt(r.injury_status) && (Number(r.proj_fp_g_healthy ?? r.proj_fp_g) || Number(r.proj_avg) || 0) >= 10).length;
   const lineupProj = lineup.reduce((s, l) => s + (l.player ? weekVal(l.player) : 0), 0);
 
   const holeRows = ["QB", "RB", "WR", "TE"].flatMap((pos) =>
-    fas.filter((p) => p.position === pos).sort((a, b) => b.proj_fp_g - a.proj_fp_g).slice(0, 5));
+    fas.filter((p) => p.position === pos).sort((a, b) => b.ros_proj_g - a.ros_proj_g).slice(0, 5));
+  const myInjured = new Set(mine.filter((r) => isHurt(r.injury_status)).map((r) => r.gsis_id));
+  const fo = falloutRows().filter((f) => f.status === "FA" || myInjured.has(f.injured_gsis) || f.status === "MINE")
+    .filter((f) => f.horizon !== "this week" || myInjured.has(f.injured_gsis));
   const buyTargets = players.filter((p) => p.status === "ROSTERED" && p.signals?.includes("BUY_LOW"));
   const sellChips = players.filter((p) => p.status === "MINE" && p.signals?.includes("SELL_HIGH"));
   const holdLows = players.filter((p) => p.status === "MINE" && p.signals?.includes("BUY_LOW"));
@@ -80,8 +84,8 @@ export default function WarRoom() {
           </div>
           {lineup.map((l, i) => {
             const fa = bestFA(l.slot);
-            const pv = l.player ? Number(l.player.proj_fp_g ?? l.player.proj_avg ?? 0) : 0;
-            const upgrade = fa && fa.proj_fp_g - pv >= 1.5;
+            const pv = l.player ? Number(l.player.ros_proj_g ?? l.player.proj_avg ?? 0) : 0;
+            const upgrade = fa && fa.ros_proj_g - pv >= 1.5;
             return (
               <div className="slotrow" key={l.slot + i}>
                 <span className="slotlabel">{l.slot}</span>
@@ -90,14 +94,14 @@ export default function WarRoom() {
                     <>
                       {l.player.gsis_id ? <Link className="plink" href={`/players/${l.player.gsis_id}`}><b>{l.player.name}</b></Link> : <b>{l.player.name}</b>}{" "}
                       <span className="muted small">{l.player.team}</span> <Injury status={l.player.injury_status} />{" "}
-                      <span className="small sub num">{fmt(l.player.proj_week)} · {fmt(l.player.proj_fp_g)}</span>
+                      <span className="small sub num">{fmt(l.player.proj_week)} · {fmt(l.player.ros_proj_g)}</span>
                     </>
                   ) : <span className="weak">Empty — no healthy eligible player</span>}
                   {upgrade && (
                     <div className="small">
                       <span className="pos-delta">FA upgrade:</span>{" "}
                       <Link className="link" href={`/players/${fa.gsis_id}`}>{fa.name}</Link>{" "}
-                      <span className="muted">({fa.team}) {fmt(fa.proj_fp_g)}/g, {fmt(fa.proj_fp_g - pv, "signed1")}</span>
+                      <span className="muted">({fa.team}) {fmt(fa.ros_proj_g)}/g, {fmt(fa.ros_proj_g - pv, "signed1")}</span>
                     </div>
                   )}
                 </span>
@@ -122,16 +126,26 @@ export default function WarRoom() {
 
       <div className="card section">
         <div className="card-head">
+          <h2>Injury fallout — roles you can take</h2>
+          <a className="link small" href="/injuries">All injuries →</a>
+        </div>
+        <p className="small sub" style={{ marginTop: -4 }}>Free agents inheriting an injured starter&apos;s work, plus the backups behind your own injured players.</p>
+        <DataTable rows={fo} columns={fallCols} initialSort={{ key: "boost_xfp_g", dir: "desc" }} limit={10}
+          empty="No opened roles worth chasing right now." />
+      </div>
+
+      <div className="card section">
+        <div className="card-head">
           <h2>Fix the holes — best available free agents</h2>
           <Link className="link small" href="/waivers">Full waiver board →</Link>
         </div>
         <DataTable
           rows={pick(holeRows, BASE)}
           positions={["QB", "RB", "WR", "TE"]}
-          initialSort={{ key: "proj_fp_g", dir: "desc" }}
+          initialSort={{ key: "ros_proj_g", dir: "desc" }}
           columns={[
             { key: "name", label: "Player", kind: "player" },
-            { key: "proj_fp_g", label: "Proj/g", help: "Model projection per game" },
+            { key: "ros_proj_g", label: "ROS/g", help: "Rest-of-season points per game: model projection × expected availability (injuries), incl. usage inherited from injured teammates" },
             { key: "xfp_g", label: "xFP/g", help: "Expected fantasy points per game from usage" },
             { key: "fp_g", label: "FP/g" },
             { key: "xfp_trend", label: "xFP trend", kind: "delta", help: "Recent xFP/g minus earlier xFP/g" },
@@ -155,11 +169,11 @@ export default function WarRoom() {
         <div className="card-head"><h2>Your roster</h2></div>
         <DataTable
           rows={pick(mine, [...BASE, "proj_week", "on_bye"])}
-          initialSort={{ key: "proj_fp_g", dir: "desc" }}
+          initialSort={{ key: "ros_proj_g", dir: "desc" }}
           columns={[
             { key: "name", label: "Player", kind: "player" },
             { key: "proj_week", label: "ESPN wk", help: "ESPN projection this week" },
-            { key: "proj_fp_g", label: "Proj/g" },
+            { key: "ros_proj_g", label: "ROS/g", help: "Rest-of-season points per game: model projection × expected availability (injuries), incl. usage inherited from injured teammates" },
             { key: "fp_g", label: "FP/g" },
             { key: "xfp_g", label: "xFP/g" },
             { key: "value_gap", label: "Gap", kind: "delta" },

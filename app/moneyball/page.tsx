@@ -3,7 +3,7 @@ import Scatter, { type Pt } from "@/components/Scatter";
 import { getPlayers, pick } from "@/lib/data";
 
 const KEYS = ["gsis_id", "espn_id", "name", "position", "team", "status", "fantasy_team", "injury_status", "games",
-  "fp_g", "xfp_g", "usage_xfp_g", "eff_reg_g", "proj_fp_g", "value_gap", "td_diff", "tds", "xtds", "signals", "reasons",
+  "fp_g", "xfp_g", "usage_xfp_g", "eff_reg_g", "proj_fp_g", "ros_proj_g", "avail_ros", "avail_status", "value_gap", "td_diff", "tds", "xtds", "signals", "reasons",
   "proj_avg", "market_gap", "xfp_trend", "route_share_trend", "target_share_trend", "rush_share_trend", "tprr", "yprr",
   "route_share", "target_share", "rush_share", "pct_tprr", "pct_yprr", "pct_route_share", "pct_target_share", "pct_rush_share",
   "first_read_share", "pct_first_read_share", "adds_24h"];
@@ -11,7 +11,7 @@ const KEYS = ["gsis_id", "espn_id", "name", "position", "team", "status", "fanta
 const gapCols: Col[] = [
   { key: "name", label: "Player", kind: "player" },
   { key: "status", label: "Availability", kind: "avail", fmt: "text" },
-  { key: "proj_fp_g", label: "Proj/g", help: "Usage xFP (recency-weighted) + regressed efficiency" },
+  { key: "proj_fp_g", label: "Proj/g", help: "When playing: usage xFP (recency-weighted) + regressed efficiency + inherited usage" },
   { key: "fp_g", label: "FP/g" },
   { key: "xfp_g", label: "xFP/g" },
   { key: "value_gap", label: "Gap", kind: "delta", help: "Proj/g − FP/g" },
@@ -23,7 +23,7 @@ const gapCols: Col[] = [
 export default function Moneyball() {
   const all = getPlayers();
   const pts: Pt[] = all
-    .filter((p) => p.games >= 1 && (p.xfp_g >= 3 || p.fp_g >= 5))
+    .filter((p) => p.games >= 1 && (p.xfp_g >= 3 || p.fp_g >= 5) && (p.avail_ros ?? 1) >= 0.5)
     .map((p) => ({
       id: p.gsis_id, name: p.name, team: p.team, position: p.position, status: p.status, fantasy_team: p.fantasy_team,
       x: +p.xfp_g.toFixed(2), y: +p.fp_g.toFixed(2), proj: +p.proj_fp_g.toFixed(2), gap: +p.value_gap.toFixed(2), games: p.games,
@@ -84,7 +84,7 @@ export default function Moneyball() {
             { key: "route_share_trend", label: "Route share Δ", kind: "delta", fmt: "signedpct", help: "Estimated route participation change" },
             { key: "target_share_trend", label: "Target share Δ", kind: "delta", fmt: "signedpct" },
             { key: "rush_share_trend", label: "Rush share Δ", kind: "delta", fmt: "signedpct" },
-            { key: "proj_fp_g", label: "Proj/g" },
+            { key: "ros_proj_g", label: "ROS/g", help: "Rest-of-season points per game: model projection × expected availability (injuries), incl. usage inherited from injured teammates" },
             { key: "adds_24h", label: "Sleeper adds", fmt: "int" },
           ]}
         />
@@ -104,7 +104,7 @@ export default function Moneyball() {
           columns={[
             { key: "name", label: "Player", kind: "player" },
             { key: "status", label: "Availability", kind: "avail" },
-            { key: "proj_fp_g", label: "Model/g" },
+            { key: "ros_proj_g", label: "Model ROS/g", help: "Rest-of-season points per game: model projection × expected availability (injuries), incl. usage inherited from injured teammates" },
             { key: "proj_avg", label: "ESPN/g" },
             { key: "market_gap", label: "Edge", kind: "delta" },
             { key: "tprr", label: "TPRR (est)", fmt: "num3", pct: "pct_tprr" },

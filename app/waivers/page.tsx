@@ -9,8 +9,8 @@ export default function Waivers() {
     const p = by.get(String(w.espn_id));
     return {
       espn_id: String(w.espn_id), gsis_id: p?.gsis_id ?? null, name: w.name, position: w.position, team: w.pro_team,
-      injury_status: w.injury_status, waiver_score: w.waiver_score, week_gain: w.week_gain, ros_gain: w.ros_gain,
-      proj_fp_g: p?.proj_fp_g ?? null, proj_avg: w.proj_avg, proj_week: w.proj_week, xfp_g: p?.xfp_g ?? null,
+      injury_status: p?.injury_status ?? w.injury_status, waiver_score: w.waiver_score, week_gain: w.week_gain, ros_gain: w.ros_gain,
+      proj_fp_g: p?.proj_fp_g ?? null, ros_proj_g: p?.ros_proj_g ?? null, proj_avg: w.proj_avg, proj_week: w.proj_week, xfp_g: p?.xfp_g ?? null,
       fp_g: p?.fp_g ?? null, tprr: p?.tprr ?? null, pct_tprr: p?.pct_tprr ?? null, route_share: p?.route_share ?? null,
       pct_route_share: p?.pct_route_share ?? null, rush_share: p?.rush_share ?? null, pct_rush_share: p?.pct_rush_share ?? null,
       xfp_trend: p?.xfp_trend ?? null, adds_24h: w.adds_24h, pct_owned: w.pct_owned, signals: p?.signals ?? w.signals ?? "",
@@ -41,7 +41,7 @@ export default function Waivers() {
             { key: "waiver_score", label: "Score", help: "0-100, percentile-weighted within this free-agent pool" },
             { key: "week_gain", label: "Wk gain", help: "Lineup points added this week" },
             { key: "ros_gain", label: "ROS gain", help: "Lineup points/game added rest of season (model)" },
-            { key: "proj_fp_g", label: "Model/g" },
+            { key: "ros_proj_g", label: "Model ROS/g", help: "Rest-of-season points per game: model projection × expected availability (injuries), incl. usage inherited from injured teammates" },
             { key: "proj_avg", label: "ESPN/g" },
             { key: "xfp_g", label: "xFP/g" },
             { key: "xfp_trend", label: "xFP Δ", kind: "delta" },

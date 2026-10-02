@@ -61,7 +61,7 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
       </div>
 
       <div className="grid g5">
-        <Tile label="Model projection" value={fmt(p.proj_fp_g)} note="pts / game" />
+        <Tile label="Rest-of-season" value={fmt(p.ros_proj_g)} note={`pts / game · ${fmt(p.proj_fp_g)} when playing × ${fmt(p.avail_ros, "pct")} available`} />
         <Tile label="Actual" value={fmt(p.fp_g)} note={`FP / game · ${p.games} G`} />
         <Tile label="Expected (xFP)" value={fmt(p.xfp_g)} note={p.games_recent ? `last 2 wks ${fmt(p.xfp_g_recent)} / g` : "no games last 2 wks"} />
         <Tile label="Value gap" value={fmt(p.value_gap, "signed1")} note="proj − actual" />
@@ -116,7 +116,10 @@ export default async function PlayerPage({ params }: { params: Promise<{ id: str
             <Kv label={`Efficiency this season (FPOE/g, ${p.games} G)`} value={fmt(p.fpoe_g, "signed1")} />
             <Kv label={`Last season FPOE/g (${fmt(p.prev_games, "int")} G)`} value={fmt(p.prev_fpoe_g, "signed1")} />
             <Kv label={`Regressed efficiency (K = ${k} games)`} value={fmt(p.eff_reg_g, "signed1")} />
-            <Kv label="= Projection / game" value={fmt(p.proj_fp_g)} />
+            <Kv label="+ Usage inherited from injured teammates" value={fmt(p.injury_boost_g, "signed1")} />
+            <Kv label="= Projection / game when playing" value={fmt(p.proj_fp_g)} />
+            <Kv label={`× Availability (${p.avail_status ?? "ACTIVE"}${p.avail_source ? `, ${p.avail_source}` : ""})`} value={fmt(p.avail_ros, "pct")} />
+            <Kv label="= Rest-of-season / game" value={fmt(p.ros_proj_g)} />
             <Kv label="ESPN projected avg / game" value={fmt(p.proj_avg)} />
             <Kv label="Model edge vs ESPN" value={fmt(p.market_gap, "signed1")} />
           </div>

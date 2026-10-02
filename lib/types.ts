@@ -54,4 +54,5 @@ export interface Meta {
     recent_weeks: number;
   };
   tables?: Record<string, number>;
+  injury_sources?: { overrides: number; sleeper: number; news_players: number; nfl_report: number };
 }

@@ -50,6 +50,16 @@ export default function Method() {
         <li>Touchdowns ±1.5 vs expected and QB pass TDs ±2 vs expected are listed as reasons.</li>
       </ul>
 
+      <h2>Injuries override the model</h2>
+      <ul>
+        <li><b>Status sources</b>, strongest first: your <code>injury_overrides.csv</code> (on the Mac mini, in ff-pipeline) → ESPN player news (scanned for &ldquo;out for the season&rdquo;, torn ACL/Achilles, &ldquo;miss X weeks&rdquo;) → ESPN league status → Sleeper → NFL injury report.</li>
+        <li><b>Out for season</b>: rest-of-season value is 0 and every buy/sell/trend signal is removed.</li>
+        <li><b>IR / PUP / suspension</b>: value × share of remaining weeks he&apos;s expected to play (IR default 6 games out unless news or an override says otherwise); buy/sell signals removed.</li>
+        <li><b>Out / doubtful</b>: buy-low survives only if he&apos;s expected for ≥75% of remaining weeks.</li>
+        <li><b>Vacated work</b>: an injured player with a real role (QB 12, RB 6, WR 6, TE 5+ xFP/g when healthy) hands his usage to healthy teammates. Weights blend what actually happened in games he missed (who absorbed the work), the current depth chart, and current share; backups keep 85% of the starter&apos;s expected points (QB 80%). Teammates gaining ≥1.5 pts/g ROS get <b>Role opened</b>.</li>
+        <li><b>ROS/g</b> everywhere = projection when playing × expected availability. &ldquo;Healthy/g&rdquo; is the per-game projection when he plays.</li>
+      </ul>
+
       <h2>Routes, TPRR and YPRR are estimates</h2>
       <p>
         No free source has actual routes run for {m.season ?? "this season"} (nflverse participation data stops at 2025;

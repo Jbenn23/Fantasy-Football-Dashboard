@@ -6,6 +6,7 @@ const LINKS = [
   { href: "/", label: "War Room" },
   { href: "/moneyball", label: "Moneyball" },
   { href: "/waivers", label: "Waivers" },
+  { href: "/injuries", label: "Injuries" },
   { href: "/players", label: "Players" },
   { href: "/teams", label: "Team Context" },
   { href: "/method", label: "Method" },

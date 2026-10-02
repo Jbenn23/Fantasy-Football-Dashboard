@@ -32,6 +32,7 @@ export const getRosters = () => memo("rosters", () => readTable("rosters").rows)
 export const getWaivers = () => memo("waivers", () => readTable("waiver_board").rows);
 export const getMyTeam = () => memo("myteam", () => readTable("my_team").rows);
 export const getActivity = () => memo("activity", () => readTable("activity").rows);
+export const getFallout = () => memo("fallout", () => readTable("injury_fallout").rows);
 
 /** Keep only the listed keys (to keep client payloads small). */
 export function pick<T extends Row>(rows: T[], keys: string[]): Row[] {
