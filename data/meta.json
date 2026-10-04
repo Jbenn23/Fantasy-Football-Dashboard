@@ -1,5 +1,5 @@
 {
- "run_ts": "2026-10-04T14:00:06+00:00",
+ "run_ts": "2026-10-04T18:55:54+00:00",
  "league_id": 1584850566,
  "season": 2026,
  "errors": {},
@@ -180,20 +180,21 @@
  "injury_sources": {
   "overrides": 1,
   "sleeper": 4154,
-  "news_players": 39,
+  "news_players": 46,
   "nfl_report": 318
  },
  "tables": {
-  "trending": 159,
+  "trending": 158,
   "teams": 12,
   "rosters": 200,
-  "activity": 88,
+  "activity": 89,
   "def_profiles": 32,
   "adv_players": 438,
   "adv_weekly": 1058,
   "team_ctx": 32,
-  "injury_fallout": 55,
+  "injury_fallout": 69,
   "waiver_board": 200,
-  "my_team": 17
+  "my_team": 17,
+  "news": 5
  }
 }
