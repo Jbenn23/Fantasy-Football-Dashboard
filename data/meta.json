@@ -1,5 +1,5 @@
 {
- "run_ts": "2026-10-04T18:55:54+00:00",
+ "run_ts": "2026-10-04T19:05:05+00:00",
  "league_id": 1584850566,
  "season": 2026,
  "errors": {},
@@ -180,7 +180,7 @@
  "injury_sources": {
   "overrides": 1,
   "sleeper": 4154,
-  "news_players": 46,
+  "news_players": 44,
   "nfl_report": 318
  },
  "tables": {
@@ -195,6 +195,6 @@
   "injury_fallout": 69,
   "waiver_board": 200,
   "my_team": 17,
-  "news": 5
+  "news": 8
  }
 }
