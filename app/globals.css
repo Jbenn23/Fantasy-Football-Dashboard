@@ -216,3 +216,18 @@ table.dt { border-collapse: separate; border-spacing: 0; width: 100%; font-size:
   .tile .value { font-size: 22px; }
 }
 .brand span { display: inline-block; max-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; vertical-align: bottom; }
+
+/* news */
+.newslist { display: flex; flex-direction: column; gap: 10px; }
+.newsitem { border: 1px solid var(--ring); border-left: 3px solid var(--grid); border-radius: 10px; padding: 10px 12px; background: var(--surface); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.newsitem.mine { border-left-color: var(--s-mine); }
+.newsitem.rbinj { border-left-color: var(--critical); }
+.newshead { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.newsname { flex: 1; min-width: 0; display: inline-flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+.newstime { white-space: nowrap; }
+.prio { font-size: 11px; font-weight: 700; min-width: 26px; text-align: center; padding: 1px 5px; border-radius: 5px; background: var(--surface-2); color: var(--ink-2); }
+.newsheadline { font-weight: 600; }
+.newsblurb { margin: 0; color: var(--ink-2); font-size: 13px; line-height: 1.45; }
+.chip.mine { color: var(--ink); background: color-mix(in srgb, var(--s-mine) 16%, transparent); border-color: color-mix(in srgb, var(--s-mine) 40%, transparent); }
+.cuffs { background: var(--surface-2); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; gap: 4px; }
+.cuffrow { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: 13px; }

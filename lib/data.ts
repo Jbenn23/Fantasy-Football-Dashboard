@@ -33,6 +33,9 @@ export const getWaivers = () => memo("waivers", () => readTable("waiver_board").
 export const getMyTeam = () => memo("myteam", () => readTable("my_team").rows);
 export const getActivity = () => memo("activity", () => readTable("activity").rows);
 export const getDefProfiles = () => memo("defprof", () => readTable("def_profiles").rows);
+export function getNews(): { run_ts: string | null; source?: string; rows: Row[] } {
+  return memo("news", () => readTable("news"));
+}
 export const getFallout = () => memo("fallout", () => readTable("injury_fallout").rows);
 
 /** Keep only the listed keys (to keep client payloads small). */
