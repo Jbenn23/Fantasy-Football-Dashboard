@@ -1,5 +1,5 @@
 {
- "run_ts": "2026-10-03T23:05:01+00:00",
+ "run_ts": "2026-10-04T12:05:05+00:00",
  "league_id": 1584850566,
  "season": 2026,
  "errors": {},
@@ -169,8 +169,8 @@
    "ngs_rec": 333,
    "ngs_rush": 143,
    "ngs_pass": 137,
-   "pfr_rec": 773,
-   "pfr_rush": 379,
+   "pfr_rec": 788,
+   "pfr_rush": 385,
    "ftn": 8246,
    "sched": 272,
    "ids": 12518
@@ -181,10 +181,10 @@
   "overrides": 1,
   "sleeper": 4154,
   "news_players": 39,
-  "nfl_report": 313
+  "nfl_report": 318
  },
  "tables": {
-  "trending": 157,
+  "trending": 159,
   "teams": 12,
   "rosters": 200,
   "activity": 88,
