@@ -1,5 +1,5 @@
 {
- "run_ts": "2026-10-04T23:05:05+00:00",
+ "run_ts": "2026-10-05T12:05:01+00:00",
  "league_id": 1584850566,
  "season": 2026,
  "errors": {},
@@ -161,14 +161,14 @@
   "prior_stability": 0.4,
   "recent_weeks": 2,
   "sources": {
-   "pbp": 10066,
-   "stats": 4024,
-   "snaps": 4579,
-   "ffopp": 1048,
+   "pbp": 10979,
+   "stats": 4379,
+   "snaps": 5876,
+   "ffopp": 1341,
    "ffopp_prev": 6054,
-   "ngs_rec": 333,
-   "ngs_rush": 143,
-   "ngs_pass": 137,
+   "ngs_rec": 418,
+   "ngs_rush": 176,
+   "ngs_pass": 168,
    "pfr_rec": 788,
    "pfr_rush": 385,
    "ftn": 8246,
@@ -180,21 +180,21 @@
  "injury_sources": {
   "overrides": 1,
   "sleeper": 4154,
-  "news_players": 49,
+  "news_players": 52,
   "nfl_report": 318
  },
  "tables": {
-  "trending": 155,
+  "trending": 158,
   "teams": 12,
   "rosters": 200,
   "activity": 89,
   "def_profiles": 32,
-  "adv_players": 448,
-  "adv_weekly": 1234,
+  "adv_players": 460,
+  "adv_weekly": 1362,
   "team_ctx": 32,
-  "injury_fallout": 55,
+  "injury_fallout": 54,
   "waiver_board": 200,
   "my_team": 17,
-  "news": 64
+  "news": 119
  }
 }
