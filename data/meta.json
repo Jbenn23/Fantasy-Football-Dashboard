@@ -1,10 +1,10 @@
 {
- "run_ts": "2026-10-05T23:05:01+00:00",
+ "run_ts": "2026-10-06T12:05:02+00:00",
  "league_id": 1584850566,
  "season": 2026,
  "errors": {},
  "sample": false,
- "week": 4,
+ "week": 5,
  "league_name": "Vampire League Hingham 2024",
  "slots": {
   "QB": 1,
@@ -161,17 +161,17 @@
   "prior_stability": 0.4,
   "recent_weeks": 2,
   "sources": {
-   "pbp": 10979,
-   "stats": 4379,
-   "snaps": 5876,
+   "pbp": 11155,
+   "stats": 4449,
+   "snaps": 5970,
    "ffopp": 1341,
    "ffopp_prev": 6054,
-   "ngs_rec": 418,
-   "ngs_rush": 176,
-   "ngs_pass": 168,
+   "ngs_rec": 424,
+   "ngs_rush": 179,
+   "ngs_pass": 171,
    "pfr_rec": 788,
    "pfr_rush": 385,
-   "ftn": 8246,
+   "ftn": 10658,
    "sched": 272,
    "ids": 12518
   }
@@ -184,17 +184,17 @@
   "nfl_report": 318
  },
  "tables": {
-  "trending": 173,
+  "trending": 175,
   "teams": 12,
   "rosters": 200,
   "activity": 89,
   "def_profiles": 32,
   "adv_players": 460,
-  "adv_weekly": 1362,
+  "adv_weekly": 1384,
   "team_ctx": 32,
-  "injury_fallout": 59,
+  "injury_fallout": 54,
   "waiver_board": 200,
   "my_team": 17,
-  "news": 148
+  "news": 159
  }
 }
