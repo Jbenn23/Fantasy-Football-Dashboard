@@ -39,6 +39,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <b>Last run had errors:</b> {errs.join(", ")}. Affected sections may be stale — see data/meta.json on the Mac mini.
             </div>
           )}
+          {Object.keys(meta.advanced?.stale_sources ?? {}).length > 0 && (
+            <div className="banner" role="status">
+              <b>Week {meta.advanced?.completed_week} still loading:</b>{" "}
+              {Object.entries(meta.advanced?.stale_sources ?? {}).map(([k, v]) => `${k} (thru W${v})`).join(", ")}.
+              These usually post 1–2 days after Monday night; the Mac re-runs everything every 90 minutes until they land.
+            </div>
+          )}
           {children}
         </main>
       </body>

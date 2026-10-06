@@ -1,3 +1,4 @@
+import { timeAgo } from "@/lib/format";
 import DataTable from "@/components/DataTable";
 import { getMeta, getWaivers, playerByEspn } from "@/lib/data";
 import type { Row } from "@/lib/types";
@@ -27,6 +28,7 @@ export default function Waivers() {
           lineup gains this week (ESPN projection, injuries/byes zeroed). <b>ROS gain</b> = same using the model&apos;s
           projection with an injury haircut. Score blends both with usage, role trend and Sleeper market demand.
           {meta.faab ? ` FAAB league (budget ${meta.faab_budget}).` : ""}
+          {" "}<b>Free agents as of {timeAgo(meta.run_ts)}</b> (live from ESPN at each run).
         </p>
       </div>
       <div className="card">

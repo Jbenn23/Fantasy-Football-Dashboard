@@ -46,6 +46,9 @@ export interface Meta {
   sample?: boolean;
   nflverse_last_week?: number;
   advanced?: {
+    completed_week?: number;
+    stale_sources?: Record<string, number>;
+    source_weeks?: Record<string, number>;
     last_week: number;
     next_week: number;
     route_rate: Record<string, number>;
